@@ -68,29 +68,50 @@ class LibroDigital(MaterialBiblioteca):
 biblioteca = []
 
 #funcion para registrar un nuevo material
+#funcion para registrar un nuevo material con validacion
 def registrar_material():
     print('1. libro fisico')
     print('2. libro digital')
     opcion = input('seleccione tipo de material: ')
     
-
-    
     if opcion == '1':
         titulo = input('ingrese titulo: ')
         autor = input('ingrese autor: ')
-        ejemplar = input('ingrese numero de ejemplar: ')
+        
+        #validar que ejemplar sea entero
+        while True:
+            ejemplar = input('ingrese numero de ejemplar: ')
+            if ejemplar.isdigit():
+                ejemplar = int(ejemplar)
+                break
+            else:
+                print('error: debe ingresar un numero entero valido')
+        
         libro = LibroFisico(titulo, autor, ejemplar)
         biblioteca.append(libro)
         print('libro fisico registrado con exito')
+    
     elif opcion == '2':
         titulo = input('ingrese titulo: ')
         autor = input('ingrese autor: ')
-        tamano = input('ingrese tamano del archivo en MB: ')
+        
+        #validar que tamano sea decimal o entero
+        while True:
+            tamano = input('ingrese tamano del archivo en MB: ')
+            try:
+                tamano = float(tamano)
+                break
+            except ValueError:
+                print('error: debe ingresar un numero (puede ser decimal)')
+        
         libro = LibroDigital(titulo, autor, tamano)
         biblioteca.append(libro)
-        print('***libro digital registrado con exito!!')
+        print('libro digital registrado con exito')
+    
     else:
         print('no existe ese tipo de libro')
+1
+
 
 #funcion para gestionar materiales existentes
 def gestionar_material():
